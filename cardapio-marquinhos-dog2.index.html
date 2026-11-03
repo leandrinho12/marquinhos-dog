@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marquinhos Dog – Cardápio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#B3261E; --red-dark:#8E1B15; --mustard:#F5B800;
+  --bg:#FAF8F5; --card:#FFFFFF; --ink:#2B1B15; --muted:#6F5E56; --line:#E6DED6;
+  --display:"Bowlby One","Arial Black",Impact,sans-serif;
+  --body:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#1D1411;--card:#2A1D18;--ink:#F6ECE4;--muted:#BBA99F;--line:#43322B}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:128px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.45}
+header{background:var(--red);color:#fff;padding:36px 20px 28px;text-align:left}
+.wrap{max-width:760px;margin:0 auto}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(2.2rem,9vw,3.6rem);line-height:1;margin:0 0 10px;color:var(--mustard);letter-spacing:.01em}
+header p{margin:0;font-size:1rem;max-width:46ch;opacity:.95}
+.bar{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 20px 8px}
+.bar .wrap{display:flex;flex-direction:column;gap:8px}
+input[type=search]{width:100%;font:inherit;padding:11px 14px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+input[type=search]:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--mustard);outline-offset:2px}
+nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;text-decoration:none;color:var(--ink);font-weight:700;font-size:.95rem;padding:7px 14px;border-radius:999px;border:2px solid var(--line);background:var(--card)}
+nav a.on{background:var(--red);border-color:var(--red);color:#fff}
+main{padding:8px 20px 90px}
+section{margin-top:30px}
+h2{font-family:var(--display);font-weight:400;font-size:1.7rem;margin:0 0 4px;color:var(--red)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h2{color:var(--mustard)}}
+.sub{margin:0 0 10px;color:var(--muted);font-size:.9rem}
+ul{list-style:none;margin:0;padding:0}
+li.item{display:grid;grid-template-columns:1fr auto;gap:2px 16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line)}
+.name{font-weight:700;font-size:1.08rem}
+.desc{grid-column:1;color:var(--muted);font-size:.92rem;max-width:60ch}
+.side{grid-column:2;grid-row:1 / span 2;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.price{font-weight:700;white-space:nowrap;background:var(--mustard);color:#2B1B15;padding:3px 11px;border-radius:8px;font-size:.98rem}
+.price.alt{background:transparent;border:2px solid var(--line);color:var(--muted);font-weight:500;font-size:.85rem}
+.empty{display:none;margin-top:30px;color:var(--muted)}
+.add{font:inherit;font-weight:700;font-size:.9rem;background:var(--red);color:#fff;border:0;border-radius:8px;padding:7px 14px;cursor:pointer}
+.add:active{transform:scale(.97)}
+.add.ok{background:#1FA855}
+.bar-cart{position:fixed;left:16px;right:16px;bottom:16px;max-width:728px;margin:0 auto;display:none;justify-content:space-between;align-items:center;background:var(--red);color:#fff;border:0;font:inherit;font-weight:700;padding:15px 18px;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.3);cursor:pointer}
+.bar-cart.show{display:flex}
+dialog{border:0;padding:0;width:100%;max-width:760px;margin:auto auto 0;border-radius:18px 18px 0 0;background:var(--bg);color:var(--ink);max-height:92vh}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+.sheet{padding:20px;display:flex;flex-direction:column;gap:14px}
+.sheet h3{font-family:var(--display);font-weight:400;font-size:1.6rem;margin:0;color:var(--red)}
+.line{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.line small{color:var(--muted)}
+.qty{display:flex;align-items:center;gap:10px;font-weight:700}
+.qty button{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:1.15rem}
+.field label{display:block;font-weight:700;font-size:.9rem;margin-bottom:4px}
+.field input,.field textarea,.field select{width:100%;font:inherit;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+.err{margin:0;color:#D93A30;font-size:.9rem;min-height:1.2em}
+.actions{display:grid;gap:8px}
+.btn{font:inherit;font-weight:700;padding:13px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.btn.wa{background:#1FA855;border-color:#1FA855;color:#fff}
+.btn.link{border:0;background:none;color:var(--muted);font-weight:500;padding:6px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:0 20px 30px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>Marquinhos Dog</h1>
+  <p>Hot dogs completos, purê cremoso e adicionais à vontade. Escolha o seu e faça o pedido.</p>
+  <p style="margin-top : 6px">Rua Alice Fávero, São José I, Paulínia</p>
+</div></header>
+
+<div class="bar"><div class="wrap">
+  <input type="search" id="q" placeholder="Buscar no cardápio (ex.: bacon, coca)" aria-label="Buscar no cardápio">
+  <nav id="nav" aria-label="Categorias"></nav>
+</div></div>
+
+<main><div class="wrap" id="menu"></div>
+  <p class="empty" id="empty">Nenhum item encontrado. Tente outra palavra.</p>
+</main>
+<footer>Preços sujeitos a alteração.</footer>
+<button class="bar-cart" id="cartBar"><span id="cartInfo"></span><span id="cartTotal"></span></button>
+<dialog id="dlg" aria-labelledby="dt"><div class="sheet">
+  <h3 id="dt">Seu pedido</h3>
+  <div id="lines"></div>
+  <div class="total"><span>Total</span><span id="sumTotal"></span></div>
+  <div class="field"><label for="nome">Seu nome</label><input id="nome" autocomplete="name"></div>
+  <div class="field"><label for="tipo">Como prefere receber?</label><select id="tipo"><option>Retirada</option><option>Entrega</option></select></div>
+  <div class="field" id="endBox" hidden><label for="end">Endereço de entrega</label><input id="end" autocomplete="street-address"></div>
+  <div class="field"><label for="obs">Observações (ex.: sabores do Dog Gratinado, sem cebola)</label><textarea id="obs" rows="2"></textarea></div>
+  <p class="err" id="err" role="alert"></p>
+  <div class="actions">
+    <button class="btn" id="keep">Continuar comprando</button>
+    <button class="btn wa" id="send">Enviar pedido pelo WhatsApp</button>
+    <button class="btn link" id="clear">Limpar carrinho</button>
+  </div>
+</div></dialog>
+
+<script>
+// Para ativar o botão de pedido, coloque o número com DDI e DDD. Ex.: "5541999999999"
+const WHATSAPP = "5519997666249";
+
+const MENU = [
+ {id:"hotdogs", titulo:"Hot dogs", itens:[
+  ["Dog Tradicional","Pão, salsicha, mostarda, catchup, maionese, vinagrete, milho, batata palha, purê e queijo ralado",24],
+  ["Dog 2 Salsichas","Pão, 2 salsichas, mostarda, catchup, maionese, vinagrete, milho, batata palha, purê e queijo ralado",26],
+  ["Dog Cheddar","Pão, salsicha, mostarda, catchup, maionese, vinagrete, milho, batata palha, cheddar, purê e queijo ralado",26],
+  ["Dog Catupiry","Pão, salsicha, mostarda, catchup, maionese, vinagrete, milho, batata palha, catupiry, purê e queijo ralado",26],
+  ["Dog Calabresa","Pão, salsicha, mostarda, catchup, maionese, vinagrete, milho, batata palha, calabresa, purê e queijo ralado",26],
+  ["Dog Frango","Pão, salsicha, mostarda, catchup, maionese, vinagrete, milho, batata palha, frango, purê e queijo ralado",26],
+  ["Dog Cream Cheese","Pão, salsicha, mostarda, catchup, maionese, vinagrete, milho, batata palha, cream cheese, purê e queijo ralado",30],
+  ["Dog Bacon","Pão, salsicha, mostarda, catchup, maionese, vinagrete, milho, batata palha, bacon, purê e queijo ralado",30],
+  ["Dog Carne Seca","Pão, salsicha, mostarda, catchup, maionese, vinagrete, milho, batata palha, carne seca, purê e queijo ralado",30],
+  ["Dog Costela","Pão, salsicha, mostarda, catchup, maionese, vinagrete, milho, batata palha, costela, purê e queijo ralado",30],
+  ["Big Dog","Pão, 2 salsichas, mostarda, catchup, maionese, vinagrete, milho, batata palha, cheddar, catupiry, frango, calabresa, bacon, purê e queijo ralado",40],
+  ["Super Big Dog","3 salsichas, mostarda, catchup, maionese, vinagrete, milho, batata palha, cheddar, catupiry, frango, calabresa, bacon, costela, carne seca, purê e queijo ralado",60],
+  ["Dog Gratinado","1 salsicha, mostarda, catchup, maionese, vinagrete, milho, batata palha, purê e queijo ralado, mais 2 sabores à sua escolha",40],
+  ["Copinho de purê","",3],
+  ["Prato de purê","",24]
+ ]},
+ {id:"bebidas", titulo:"Bebidas", itens:[
+  ["Coca-Cola 2 L","",16],
+  ["Guaraná Antarctica 2 L","",13],
+  ["Coca-Cola 600 ml","",9],
+  ["Coca-Cola Zero 600 ml","",9],
+  ["Coca-Cola lata","",7],
+  ["Coca-Cola Zero lata","",7],
+  ["Fanta Laranja lata","",7],
+  ["Fanta Uva lata","",7],
+  ["Guaraná Antarctica lata","",7],
+  ["Água com gás","",6],
+  ["Água sem gás","",5],
+  ["Suco de laranja 500 ml","",13],
+  ["Suco de laranja 1 L","",25]
+ ]},
+ {id:"adicionais", titulo:"Adicionais", sub:"Turbine o seu dog.", itens:[
+  ["Salsicha extra","1 salsicha a mais",5],
+  ["Frango","",5],
+  ["Cheddar","",5],
+  ["Catupiry","",5],
+  ["Calabresa","",5],
+  ["Mussarela","",5],
+  ["Bacon","",8],
+  ["Carne seca","",8],
+  ["Costela","",8],
+  ["Cream cheese","",8]
+ ]}
+];
+
+const fmt = v => v==null ? "Consulte" : "R$ " + v.toFixed(2).replace(".",",");
+const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const menu = document.getElementById("menu"), nav = document.getElementById("nav");
+
+menu.innerHTML = MENU.map(c => `
+  <section id="${c.id}" data-cat="${c.id}">
+    <h2>${c.titulo}</h2>${c.sub?`<p class="sub">${c.sub}</p>`:""}
+    <ul>${c.itens.map(([n,d,p],i) => `
+      <li class="item" data-t="${norm(n+" "+d)}">
+        <span class="name">${n}</span>
+        <span class="side"><span class="price${p==null?" alt":""}">${fmt(p)}</span><button class="add" data-id="${c.id}-${i}" aria-label="Adicionar ${n} ao carrinho">Adicionar</button></span>
+        ${d?`<span class="desc">${d}</span>`:""}
+      </li>`).join("")}</ul>
+  </section>`).join("");
+nav.innerHTML = MENU.map(c => `<a href="#${c.id}" data-id="${c.id}">${c.titulo}</a>`).join("");
+
+// busca
+document.getElementById("q").addEventListener("input", e => {
+  const t = norm(e.target.value.trim());
+  let total = 0;
+  document.querySelectorAll("section").forEach(sec => {
+    let n = 0;
+    sec.querySelectorAll("li").forEach(li => { const ok = !t || li.dataset.t.includes(t); li.style.display = ok ? "" : "none"; if(ok) n++; });
+    sec.style.display = n ? "" : "none"; total += n;
+  });
+  document.getElementById("empty").style.display = total ? "none" : "block";
+});
+
+// categoria ativa ao rolar
+const links = [...nav.querySelectorAll("a")];
+const io = new IntersectionObserver(es => es.forEach(en => {
+  if(en.isIntersecting){ links.forEach(a => a.classList.toggle("on", a.dataset.id === en.target.id)); }
+}), {rootMargin:"-30% 0px -60% 0px"});
+document.querySelectorAll("section").forEach(s => io.observe(s));
+
+// carrinho
+const ITEMS = {};
+MENU.forEach(c => c.itens.forEach(([n,d,p],i) => ITEMS[c.id+"-"+i] = {n,p}));
+const cart = {};
+const $ = id => document.getElementById(id), dlg = $("dlg");
+
+function totals(){
+  let q=0,t=0,open=false;
+  for(const k in cart){ q+=cart[k]; if(ITEMS[k].p==null) open=true; else t+=ITEMS[k].p*cart[k]; }
+  return {q,t,open};
+}
+function refresh(){
+  const {q,t,open} = totals();
+  $("cartBar").classList.toggle("show", q>0);
+  $("cartInfo").textContent = `Ver carrinho (${q} ${q===1?"item":"itens"})`;
+  $("cartTotal").textContent = fmt(t) + (open?" + a consultar":"");
+  if(dlg.open){ if(!q) dlg.close(); else drawLines(); }
+}
+function drawLines(){
+  $("lines").innerHTML = Object.keys(cart).map(k => `
+    <div class="line"><span>${ITEMS[k].n}<br><small>${ITEMS[k].p==null?"Valor a consultar":fmt(ITEMS[k].p*cart[k])}</small></span>
+    <span class="qty"><button data-id="${k}" data-d="-1" aria-label="Diminuir">−</button>${cart[k]}<button data-id="${k}" data-d="1" aria-label="Aumentar">+</button></span></div>`).join("");
+  const {t,open} = totals();
+  $("sumTotal").textContent = fmt(t) + (open?" + a consultar":"");
+}
+menu.addEventListener("click", e => {
+  const b = e.target.closest(".add"); if(!b) return;
+  cart[b.dataset.id] = (cart[b.dataset.id]||0) + 1;
+  refresh();
+  b.textContent = "Adicionado"; b.classList.add("ok");
+  setTimeout(() => { b.textContent = "Adicionar"; b.classList.remove("ok"); }, 900);
+});
+$("lines").addEventListener("click", e => {
+  const b = e.target.closest("button"); if(!b) return;
+  cart[b.dataset.id] += Number(b.dataset.d);
+  if(cart[b.dataset.id] <= 0) delete cart[b.dataset.id];
+  refresh();
+});
+$("cartBar").addEventListener("click", () => { drawLines(); $("err").textContent=""; dlg.showModal(); });
+$("keep").addEventListener("click", () => dlg.close());
+dlg.addEventListener("click", e => { if(e.target===dlg) dlg.close(); });
+$("clear").addEventListener("click", () => { for(const k in cart) delete cart[k]; refresh(); dlg.close(); });
+$("tipo").addEventListener("change", e => { $("endBox").hidden = e.target.value !== "Entrega"; });
+
+$("send").addEventListener("click", () => {
+  const nome = $("nome").value.trim(), entrega = $("tipo").value==="Entrega", end = $("end").value.trim();
+  if(!nome){ $("err").textContent = "Informe seu nome."; $("nome").focus(); return; }
+  if(entrega && !end){ $("err").textContent = "Informe o endereço de entrega."; $("end").focus(); return; }
+  if(!WHATSAPP){ $("err").textContent = "WhatsApp da loja não configurado."; return; }
+  const {t,open} = totals();
+  const itens = Object.keys(cart).map(k => `${cart[k]}x ${ITEMS[k].n} - ${ITEMS[k].p==null?"valor a consultar":fmt(ITEMS[k].p*cart[k])}`).join("\n");
+  let msg = `*Novo pedido - Marquinhos Dog*\n\nCliente: ${nome}\n${entrega?"Entrega: "+end:"Retirada no local"}\n\n*Itens*\n${itens}\n\n*Total: ${fmt(t)}${open?" + itens a consultar":""}*`;
+  const obs = $("obs").value.trim(); if(obs) msg += `\n\nObservações: ${obs}`;
+  window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(msg), "_blank");
+});
+</script>
+</body>
+</html>
